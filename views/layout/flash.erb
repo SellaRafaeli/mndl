@@ -1,0 +1,12 @@
+<%
+  flash_type = session[:flash_type] || "info" rescue 'info' #possible types: primary, secondary, success, danger, warning, success, info, light, dark
+  session[:flash_type] = nil
+  text ||= flash.message
+  if text.present?
+%>
+
+<div class="alert alert-dismissible alert-<%=flash_type%>">
+  <button type="button" class="close">×</button>
+  <p><%= text %></p>
+</div>
+<% end %>

@@ -1,0 +1,13 @@
+/*post*/
+/*@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');*/
+
+body {
+	font-family: Inter, Raleway, Oxygen, Rubik, 'Poppins', 'Assistant', sans-serif !important;
+}
+:root {
+  --color1: #ab1234;  
+  --color2: #34AB12;  
+  --color3: #1234AB;
+  --color4: #abc123;
+  --hover-brightness: 1.2;
+}

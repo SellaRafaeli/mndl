@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+
+<html>
+<%= erb :'layout/doc_head' %>
+
+<body>  
+  <%= erb :"layout/flash" rescue '' %>            
+  <%#= erb :"header/links" unless @hide_links %>
+  
+  <div class='main-container'>
+    <%= yield %> 
+  </div>
+  
+  
+  <%= erb :'layout/dev_mode' %>
+  <%#= erb :"layout/css_files" %>      
+  <%#= erb :'layout/analytics' %>
+  
+  <% if cuid %> <script> window.cuid ="<%=cuid%>"; </script><% end %>
+
+
+</body>
+</html>

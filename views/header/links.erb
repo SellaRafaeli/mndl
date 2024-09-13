@@ -1,0 +1,112 @@
+<%
+  app_name = 'My App'
+%>
+
+<style>
+.top-nav {
+  margin: 0 20px;
+  margin: 0;
+  <% if !$prod %>
+  border: 1px solid goldenrod;
+  <% end %>
+}
+
+.top-nav a:not(.logo) {
+  color: black;
+  margin: 20px;
+  font-size: 15px;
+  font-weight: bold;  
+  position: relative;
+  bottom: 3px;
+}
+
+.top-nav a.border {
+  border:1px solid;
+}
+
+.top-nav a:not(.logo):hover {
+  color: black;
+}
+
+@media screen and (min-width: 1000px) {
+  .logo {
+    width: 200px;
+    display: inline-block;
+    vertical-align: top;
+    position: relative;
+  }
+  
+  .top-nav {
+    margin: 0 20px;
+    padding: 20px 0 10px;    
+    height: 50px;
+  }
+
+  .top-nav a:not(.logo) {
+    background-color: white;
+    padding: 5px 10px;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .container {
+    margin:10px 0;
+    padding:10px 0;
+    position: relative;
+  }
+  .top-nav {
+    margin: 10px;
+    position: relative;
+    text-align: center;
+  }
+  .top-nav a, .top-nav .search_input_form {
+    display: none;
+    margin: 5px;
+  }
+  
+  .top-nav a:not(.logo).expanded, {
+    display: block;
+    padding: 15px;
+    background:whitesmoke;
+    padding-right: 30px;
+    margin-left: 50px;
+    color: black;
+    text-align: center;
+  }
+
+  .top-nav a.logo {
+    display: block;
+    text-align: center;
+  }
+  .top-nav a .sub_logo_msg {
+    display: block;
+    text-align: center;
+    width: 100%;
+  }
+  .hamburger {
+    display: block;
+  }
+}
+</style>
+
+<div class='top-nav'>
+  <div class='logo_container' style='display: inline-block; display: none'>
+    <a href='/' class='logo'>
+      <small class='logo_sub_text'><%=app_name%></small>
+    </a>    
+  </div>
+  
+  <% unless @hide_header %>  
+  <a class='zbtn logo' href='/' style='display: inline; flex-direction: column; font-size: 16px'>
+    <span class='logo-text' style='color: var(--color2)'>&lt;</span><span style='color:var(--color2)'>/&gt; </span>
+    <span style='color:var(--color1);'><%=app_name%></span><span style='color:var(--color2)'></span>
+  </a>
+  <% if cu %>
+    <a id=user_name class='user_name' href='/me'><b><%= cu[:name] %> </b> </a>       
+  <% else %>      
+    <a id='top-nav-btn1' href='/login'>login</a>
+  <% end %>
+
+
+  <%= erb :'header/hamburger' %>
+</div>  
