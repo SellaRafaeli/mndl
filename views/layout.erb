@@ -5,8 +5,22 @@
 
 <body>  
   <%= erb :"layout/flash" rescue '' %>            
-  <%#= erb :"header/links" unless @hide_links %>
-  
+  <%= erb :"header/links" unless @hide_links %>
+
+  <style>  
+  body {
+    background-color: whitesmoke;
+    font-family: arial;
+  }
+  .main-container {
+    margin:10px 40px;    
+    padding:10px 20px;
+    background-color: white;
+    border-radius: 10px;
+    zdisplay: inline-block;
+    zmin-width: 300px;
+  }
+  </style>
   <div class='main-container'>
     <%= yield %> 
   </div>

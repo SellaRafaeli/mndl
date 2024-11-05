@@ -5,8 +5,18 @@
   if text.present?
 %>
 
-<div class="alert alert-dismissible alert-<%=flash_type%>">
-  <button type="button" class="close">×</button>
-  <p><%= text %></p>
+<style>
+.flash-alert {
+  margin: auto;
+  text-align: center;
+  background-color: grey;
+  max-width: 500px;
+  padding: 10px 20px;
+  color: white;
+}
+</style>
+<div class="flash-alert">
+<!--   <button type="button" class="close">×</button> -->
+  <%= text %>
 </div>
 <% end %>

@@ -19,6 +19,10 @@ def pr
   @params = params rescue {}
 end
 
+def request_header(name)
+  request.env['HTTP_'+name.upcase.to_s]
+end
+
 def cu_token
   token = request_header(:token) || params[:token]
   user  = $users.get(token: token) if token

@@ -1,10 +1,10 @@
 <%
-  app_name = 'My App'
+  app_name = 'MNDL'
 %>
 
 <style>
 .top-nav {
-  margin: 0 20px;
+  zmargin: 0 20px;
   margin: 0;
   <% if !$prod %>
   border: 1px solid goldenrod;
@@ -37,7 +37,7 @@
   }
   
   .top-nav {
-    margin: 0 20px;
+    zmargin: 0 20px;
     padding: 20px 0 10px;    
     height: 50px;
   }
@@ -102,11 +102,14 @@
     <span style='color:var(--color1);'><%=app_name%></span><span style='color:var(--color2)'></span>
   </a>
   <% if cu %>
-    <a id=user_name class='user_name' href='/me'><b><%= cu[:name] %> </b> </a>       
+    <a class='zuser_name' href='#'><%= cu[:email] %></a>       
+    <a class='' href='/logout' onclick="return confirm('Are you sure you wish to log out?')">log out</a>
   <% else %>      
     <a id='top-nav-btn1' href='/login'>login</a>
   <% end %>
 
+  <% end %>
 
-  <%= erb :'header/hamburger' %>
+
+  <%#= erb :'header/hamburger' %>
 </div>  

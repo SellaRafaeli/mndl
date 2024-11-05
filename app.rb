@@ -12,7 +12,7 @@ Bundler.require
 puts "loading dotenv..."
 Dotenv.load
 
-$app_name   = 'my app'
+$app_name   = 'mndl'
 
 require './setup'
 require './my_lib'
@@ -28,3 +28,12 @@ include Helpers #makes helpers globally available
 get '/ping' do
   {msg: "pong from #{$app_name}"}
 end
+
+get '/' do 
+  if cu 
+    redirect '/projects'
+  else
+    erb :'/login', default_layout  
+  end
+end
+
