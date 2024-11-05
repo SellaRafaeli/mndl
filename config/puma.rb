@@ -6,7 +6,7 @@ if USE_PUMA_WORKERS
 
   preload_app!
 
-  rackup      DefaultRackup
-  port        ENV['PORT']     || 8100
+  # rackup      DefaultRackup
+  port        ENV['PORT']     || 9393
   environment ENV['RACK_ENV'] || 'development'
 end
