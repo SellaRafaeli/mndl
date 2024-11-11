@@ -50,7 +50,7 @@
   </select>
   <br/><br/>
 
-  <label> Host </label><input name=host />
+  <label> Host </label><input name=host value="<%='host-'+nice_id if !$prod %>" />
   <br/><br/>
   
   <label> Number of variants per ORF sequence </label>
@@ -65,7 +65,7 @@
   <br/><br/>
 
   <label> Enzymes to avoid (multiselect with "ctrl"/"cmd")</label><br/>
-  <select name=enzymes_to_avoid multiple>
+  <select name=enzymes_to_avoid[] multiple>
     <% enzymes_to_avoid.each do |e| %>
       <option><%=e%></option>
     <% end %>
@@ -86,5 +86,5 @@
   <button type=button onclick="(e => { let last = document.querySelectorAll('.region_to_preserve'); let clone = last[last.length - 1].cloneNode(true); clone.querySelectorAll('input').forEach(i => i.value = ''); last[last.length - 1].after(clone); })()"> + </button>
 
   <br/><br/>
-  <button> Submit </button>
+  <button autofocus> Submit </button>
 </form>

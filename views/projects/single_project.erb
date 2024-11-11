@@ -41,6 +41,23 @@
         Gene: <%= gene[:name] %>
         <br/><br/>   
 
+        host: <%= gene[:host] %>
+        <br/><br/>
+
+        variants: <%= gene[:num_proteins] %>
+        <br/><br/>
+
+        enzymes to avoid: <%= gene[:enzymes_to_avoid] %>
+        <br/><br/>
+
+        regions to preserve: <%= gene[:region_preserve_start].size %>
+        <br/><br/>
+
+        vector-based optimization: <%= gene[:vector_based_optimization] %>
+        <br/><br/>
+
+        
+
         <div style='text-align: right'>
           <a href=/genes/delete/<%=gene[:_id]%> onclick='return confirm("are you sure?")'><button> delete gene <i class='fa fa-trash'></i></button></a>
         </div>

@@ -10,6 +10,12 @@ post '/gene' do
   require_user
 
   data = pr 
+
+  
+  data[:region_preserve_start] = data[:region_preserve_start].select {|v| v.present? }
+  data[:region_preserve_end]   = data[:region_preserve_end].select {|v| v.present? }
+
+
   data[:user_id] = cuid
 
   $genes.add(data)
