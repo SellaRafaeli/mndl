@@ -40,20 +40,8 @@ post '/project' do
 
   data[:user_id] = cuid
   data[:status]  = :created
-  $projects.add(data)
+  proj = $projects.add(data)
 
   flash.message = "Created project."
-  redirect '/projects'
-end
-
-post '/project/:project_id/new_variant' do 
-  require_user
-
-  proj_id = pr[:project_id] 
-  data    = {dna: pr[:dna], project_id: proj_id}
-
-  $variants.add(data)
-
-  flash.message = 'Variant added'
-  redirect '/projects/'+proj_id
+  redirect '/projects/'+proj[:_id]
 end

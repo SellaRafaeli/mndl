@@ -1,6 +1,6 @@
 <%
   project  = $projects.get(user_id: cuid, _id: pr[:_id])
-  variants = $variants.get_many(project_id: project[:_id])
+  genes    = $genes.get_many(project_id: project[:_id])  
 %>
 
 <style>
@@ -11,6 +11,11 @@
   background-color: lightblue;
   padding:5px 10px;
   border-radius: 10px;
+  margin: 10px auto;
+}
+.single-gene {
+  border:2px solid lightpink;
+  padding:5px 10px;
   margin-bottom: 10px;
 }
 </style>
@@ -22,23 +27,41 @@
       <a href=/projects/delete/<%=project[:_id]%> onclick='return confirm("are you sure?")'><button> admin delete project <i class='fa fa-trash'></i></button></a>
     </div>
   <% end %>
-  
-  <% if variants.any? %>
-    <h3> Variants </h3>
-    <% variants.each do |variant| %>
-      <div class='single-variant'>
-        <%= variant[:dna] %>
+
+  <a href='/genes/<%=project[:_id]%>/add_gene'><button> Add Gene</button> </a>
+  <h3> Genes </h3>
+  <% if genes.any? %>
+    
+    <% genes.each do |gene| %>
+      <div class='single-gene'>
+        <%#= gene.to_json %>
+        Gene: <%= gene[:name] %>
         <br/><br/>   
 
-        <% if is_admin %>
         <div style='text-align: right'>
-          <a href=/variants/delete/<%=variant[:_id]%> onclick='return confirm("are you sure?")'><button> admin delete variant <i class='fa fa-trash'></i></button></a>
+          <a href=/genes/delete/<%=gene[:_id]%> onclick='return confirm("are you sure?")'><button> delete gene <i class='fa fa-trash'></i></button></a>
         </div>
-        <% end %>
         
+        <% variants = $variants.get_many(gene_id: gene[:_id]) %>
+        <% if variants.any? %>          
+          <% variants.each_with_index do |variant, idx| %>
+            <div class='single-variant'>
+              <b> Variant <%= idx+1 %> </b><br/><br/>
+              <%= variant[:host] %>: <%= variant[:dna] %>
+              <br/><br/>   
+
+              <% if is_admin %>
+              <div style='text-align: right'>
+                <a href=/variants/delete/<%=variant[:_id]%> onclick='return confirm("are you sure?")'><button> admin delete variant <i class='fa fa-trash'></i></button></a>
+              </div>
+              <% end %>
+              
+            </div>
+          <% end %>
+        <% end %>
       </div>
     <% end %>
-  <% end %>
+  <% end %>  
 
   <br/><br/>
   <a href='/projects/<%=project[:_id]%>/add_variant'><button> Add Variant</button> </a>

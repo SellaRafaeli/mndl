@@ -1,11 +1,26 @@
 <%
   project  = $projects.get(user_id: cuid, _id: pr[:_id])
+  genes    = $genes.get_many(project_id: project[:_id])
 %>
 
 <div class='add-variant'>
   <h1> <%= project[:name] %>: Add Variant <i class="fa fa-flask"></i> </h1>
 
-  <form method=post action='/project/<%=project[:_id]%>/new_variant'>
+  <form method=post action='/variant'>
+    <input hidden name=project_id value="<%=project[:_id]%>" />
+    
+    <label> Gene </label><br/>
+    <select name=gene_id>
+      <% genes.each do |gene| %>
+        <option value="<%=gene[:_id]%>"><%= gene[:name] %></option>
+      <% end %>
+    </select>
+
+    <br/><br/>
+    <label> Host </label><br/>
+    <input name="host" value="<%= nice_id if !$prod %>" />
+
+    <br/><br/>
     <label> DNA </label><br/>
     <textarea name=dna><%= guid if !$prod %></textarea>
     <br/><br/>

@@ -1,0 +1,90 @@
+<%
+  proj_id = pr[:proj_id]
+  proj    = $projects.get(user_id: cuid, _id: proj_id)
+  enzymes_to_avoid = []
+  20.times {|i| enzymes_to_avoid.push('enzyme'+i.to_s) }
+%>
+
+<style>
+.region_to_preserve {
+  border:1px solid grey;
+  padding:5px 10px;
+  border-radius: 10px;
+  margin-top: 10px;
+  display: block; 
+}
+</style>
+
+<h4> <%= proj[:name] %> </h4>
+<h1> New Gene </h1>
+
+<form method=post action=/gene>
+  <input name=project_id value="<%=proj_id%>" hidden />
+
+  <label> Name </label>
+  <br/>
+  <input name=name value="<%= 'gene-'+nice_id if !$prod %>" />
+  <br/><br/>
+
+  <label> 5' Upstream Sequence* </label>
+  <br/>
+  <textarea name=upstream_sequence><%= guid if !$prod %></textarea>
+  <br/><br/>
+
+  <label> ORF Nucleotide Sequence* </label>
+  <br/>
+  <textarea name=upstream_sequence><%= guid if !$prod %></textarea>
+  <br/><br/>
+
+  <label> Signal Peptide Present </label><input name=signal_peptide_present type=checkbox checked=true />
+  <br/><br/>
+
+  <label> Linker Present </label><input name=linker_present type=checkbox checked=true />
+  <br/><br/>
+
+  <label> Number of Proteins </label>
+  <select name=num_proteins>
+    <% 8.times do |i| %>
+      <option><%=i+1%></option>
+    <% end %>
+  </select>
+  <br/><br/>
+
+  <label> Host </label><input name=host />
+  <br/><br/>
+  
+  <label> Number of variants per ORF sequence </label>
+  <select name=num_proteins>
+    <% 20.times do |i| %>
+      <option><%=i+1%></option>
+    <% end %>
+  </select>
+  <br/><br/>
+
+  <label> Include Vector-Based Optimization </label><input name=vector_based_optimization type=checkbox checked=true />
+  <br/><br/>
+
+  <label> Enzymes to avoid (multiselect with "ctrl"/"cmd")</label><br/>
+  <select name=enzymes_to_avoid multiple>
+    <% enzymes_to_avoid.each do |e| %>
+      <option><%=e%></option>
+    <% end %>
+  </select>
+  <br/><br/>  
+
+  <div style='max-width: 800px'>
+    <label>Regions to preserve</label><br/>
+    
+    <div class='region_to_preserve'>
+      <label> Start nt <input name=region_preserve_start[] /></label> - <label> End nt <input name=region_preserve_end[] /></label>    
+      <button type=button onclick='this.closest(".region_to_preserve").remove()'> <i class='fa fa-trash'></i></button>
+      <br/>
+
+    </div>  
+  </div>
+  
+  <button type=button onclick="(e => { let last = document.querySelectorAll('.region_to_preserve'); let clone = last[last.length - 1].cloneNode(true); clone.querySelectorAll('input').forEach(i => i.value = ''); last[last.length - 1].after(clone); })()"> + </button>
+
+  <br/><br/>
+  <button> Submit </button>
+</form>

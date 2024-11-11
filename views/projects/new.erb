@@ -3,12 +3,12 @@
   <h1> Create New Project </h1>
   <form method=post action=/project>
     <label> Name </label>
-    <input name=name placeholder='My project' required />
+    <input name=name placeholder='My project' value="<%= nice_id if !$prod %>" required />
     <br/><br/>
-    <label> DNA </label>
+    <label> Description </label>
     <br/>
-    <textarea required name=dna placeholder='ABGTGABTBUA...'></textarea>
+    <textarea name=desc placeholder='My project desc'></textarea>
     <br/><br/>
-    <button> Submit </button>
+    <button autofocus> Submit </button>
   </form>
 </div>
