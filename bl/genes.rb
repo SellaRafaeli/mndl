@@ -18,7 +18,6 @@ post '/gene' do
   redirect '/projects/'+pr[:project_id]  
 end
 
-
 get '/genes/delete/:_id' do 
   require_user 
   require_admin

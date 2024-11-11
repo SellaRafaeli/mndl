@@ -1,5 +1,6 @@
 <%
   projects = $projects.all(user_id: cuid)
+  projects.sort_by! {|p| p[:status] }
 %>
 
 <style>
@@ -20,7 +21,7 @@
   <% if projects.any? %>
     <% projects.each do |project| %>
       <div class='single-project'>
-        <a href='/projects/<%=project[:_id]%>'> <%= project[:name] %></a>
+        <a href='/projects/<%=project[:_id]%>'> <%= project[:name] %> (<%=project[:status]%>)</a>
         (created <%= nice_datetime project[:created_at] %>)
         <br/><br/>        
       </div>      

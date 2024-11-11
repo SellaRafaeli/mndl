@@ -1,6 +1,7 @@
 <%
   project  = $projects.get(user_id: cuid, _id: pr[:_id])
   genes    = $genes.get_many(project_id: project[:_id])  
+  is_draft = project[:status] == PROJ_STATUS_DRAFT
 %>
 
 <style>
@@ -21,17 +22,19 @@
 </style>
 
 <div class='single-project-page'>
-  <h1> Project <%= project[:name] %> </h1>
+  <h1> Project <%= project[:name] %> (status: <%= project[:status] %>)</h1>
   <% if is_admin %>
     <div style='text-align: right'>
       <a href=/projects/delete/<%=project[:_id]%> onclick='return confirm("are you sure?")'><button> admin delete project <i class='fa fa-trash'></i></button></a>
     </div>
   <% end %>
 
-  <a href='/genes/<%=project[:_id]%>/add_gene'><button> Add Gene</button> </a>
-  <h3> Genes </h3>
+  <% if is_draft %>
+    <a href='/genes/<%=project[:_id]%>/add_gene'><button> Add Gene</button> </a>
+  <% end %>
+  
   <% if genes.any? %>
-    
+    <h3> Genes </h3>  
     <% genes.each do |gene| %>
       <div class='single-gene'>
         <%#= gene.to_json %>
@@ -54,8 +57,7 @@
               <div style='text-align: right'>
                 <a href=/variants/delete/<%=variant[:_id]%> onclick='return confirm("are you sure?")'><button> admin delete variant <i class='fa fa-trash'></i></button></a>
               </div>
-              <% end %>
-              
+              <% end %>              
             </div>
           <% end %>
         <% end %>
@@ -63,6 +65,14 @@
     <% end %>
   <% end %>  
 
+  <% if genes.any? && is_draft %>
+    <form method=post action=/project/<%=project[:_id]%>/submit>
+      <button> submit project </button>
+    </form>
+  <% end %>
+
+  <% if is_admin && genes.any? %>
   <br/><br/>
-  <a href='/projects/<%=project[:_id]%>/add_variant'><button> Add Variant</button> </a>
+  <a href='/projects/<%=project[:_id]%>/add_variant'><button> Admin Add Variant</button> </a>
+  <% end %>
 </div>

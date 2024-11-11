@@ -1,5 +1,8 @@
 $projects = $mongo.collection('projects')
 
+PROJ_STATUS_DRAFT     = 'draft' 
+PROJ_STATUS_SUBMITTED = 'submitted' 
+
 get '/projects' do 
   # flash.message = 'test'
   require_user 
@@ -39,9 +42,21 @@ post '/project' do
   data = pr.just(:name, :dna)
 
   data[:user_id] = cuid
-  data[:status]  = :created
+  data[:status]  = PROJ_STATUS_DRAFT
   proj = $projects.add(data)
 
   flash.message = "Created project."
   redirect '/projects/'+proj[:_id]
+end
+
+post '/project/:_id/submit' do 
+  require_user
+
+  proj = $projects.get(pr[:_id])
+  halt unless proj[:user_id] == cuid
+  
+  $projects.update_id(pr[:_id],{status: PROJ_STATUS_SUBMITTED})
+
+  flash.message = "Project submitted."
+  redirect back
 end
