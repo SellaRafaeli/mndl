@@ -1,0 +1,15 @@
+<%
+  project  = $projects.get(user_id: cuid, _id: pr[:_id])
+%>
+
+<div class='add-variant'>
+  <h1> <%= project[:name] %>: Add Variant <i class="fa fa-flask"></i> </h1>
+
+  <form method=post action='/project/<%=project[:_id]%>/new_variant'>
+    <label> DNA </label><br/>
+    <textarea name=dna><%= guid if !$prod %></textarea>
+    <br/><br/>
+    <button autofocus> Submit </button>
+  </form>
+</div>
+

@@ -52,4 +52,8 @@ def _req
   request rescue OpenStruct.new #call 'request' safely, including from tux 
 end
 
+def is_admin 
+  cu && cu[:email] == 'sella.rafaeli@gmail.com'
+end
+
 get '/mw/middleware_incoming' do 'refresh this' end

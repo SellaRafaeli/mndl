@@ -29,4 +29,4 @@ get '/logout' do
   flash.message = "See you next time."
   redirect '/'
 end
-# $users.add({email: 'sella.rafaeli@gmail.com', password: BCrypt::Password.create('sella')}) unless $users.get(email: 'sella.rafaeli@gmail.com')
+# ['steve','eran','guy','maoz'].each {|login| $users.add({email: "#{login}@mndl.bio", password: BCrypt::Password.create("#{login}123")}) }

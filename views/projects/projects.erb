@@ -1,27 +1,30 @@
 <%
   projects = $projects.all(user_id: cuid)
 %>
+
+<style>
+.single-project {
+  background-color: whitesmoke;
+  padding:5px 10px;
+  margin-top:10px;
+}
+</style>
+
 <div class='projects'>
   <h1> Projects </h1>
 
-  <a class='btn btn1' href='/projects/new'><button> New Project </button></a>
+  <a class='btn btn1' href='/projects/new'><button> Create New Project </button></a>
   <br/>
-  <hr/>
   <br/>
 
   <% if projects.any? %>
     <% projects.each do |project| %>
       <div class='single-project'>
-        Name: <%= project[:name] %>
-        <br/>
-        Status: <%= project[:status] %>
-        <br/>
-        Created At: <%= project[:created_at] %>
-        <br/>
-        
-        <label> DNA </label>
-        <hr/>
-        <%= project[:dna] %>
+        <a href='/projects/<%=project[:_id]%>'> <%= project[:name] %></a>
+        (created <%= nice_datetime project[:created_at] %>)
+        <br/><br/>        
+        <b> DNA: </b>
+        <%= project[:dna] %>        
       </div>      
     <% end %>
   <% else %>    

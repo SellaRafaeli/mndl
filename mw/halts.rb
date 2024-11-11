@@ -10,6 +10,10 @@ def require_user
   halt(401,{err: 'Please log in first.'}) unless cu
 end
 
+def require_admin
+  halt(401,{err: 'Only admins.'}) unless is_admin
+end
+
 get '/halts' do
   {msg: 'halt!'}
 end

@@ -1,0 +1,45 @@
+<%
+  project  = $projects.get(user_id: cuid, _id: pr[:_id])
+  variants = $variants.get_many(project_id: project[:_id])
+%>
+
+<style>
+.single-project-page {
+
+}
+.single-variant {
+  background-color: lightblue;
+  padding:5px 10px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+</style>
+
+<div class='single-project-page'>
+  <h1> Project <%= project[:name] %> </h1>
+  <% if is_admin %>
+    <div style='text-align: right'>
+      <a href=/projects/delete/<%=project[:_id]%> onclick='return confirm("are you sure?")'><button> admin delete project <i class='fa fa-trash'></i></button></a>
+    </div>
+  <% end %>
+  
+  <% if variants.any? %>
+    <h3> Variants </h3>
+    <% variants.each do |variant| %>
+      <div class='single-variant'>
+        <%= variant[:dna] %>
+        <br/><br/>   
+
+        <% if is_admin %>
+        <div style='text-align: right'>
+          <a href=/variants/delete/<%=variant[:_id]%> onclick='return confirm("are you sure?")'><button> admin delete variant <i class='fa fa-trash'></i></button></a>
+        </div>
+        <% end %>
+        
+      </div>
+    <% end %>
+  <% end %>
+
+  <br/><br/>
+  <a href='/projects/<%=project[:_id]%>/add_variant'><button> Add Variant</button> </a>
+</div>

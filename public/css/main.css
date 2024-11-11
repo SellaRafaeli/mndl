@@ -11,3 +11,7 @@ body {
   --color4: #abc123;
   --hover-brightness: 1.2;
 }
+
+button {
+  cursor: pointer;
+}
