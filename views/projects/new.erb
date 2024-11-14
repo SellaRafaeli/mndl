@@ -1,13 +1,14 @@
 
 <div class='new-project'>
-  <h1> Create New Project </h1>
+  <h1> Create New Project <i class='fa fa-plus'></i></h1>
   <form method=post action=/project>
     <label> Name </label>
+    <br/>
     <input name=name placeholder='My project' value="<%= nice_id if !$prod %>" required />
     <br/><br/>
     <label> Description </label>
     <br/>
-    <textarea name=desc placeholder='My project desc'></textarea>
+    <textarea rows=10 cols=30 name=desc placeholder='My project desc'></textarea>
     <br/><br/>
     <button autofocus> Submit </button>
   </form>

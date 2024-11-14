@@ -22,7 +22,14 @@
 </style>
 
 <div class='single-project-page'>
-  <h1> Project <%= project[:name] %> (status: <%= project[:status] %>)</h1>
+  <h1> Project <%= project[:name] %> 
+    (status: <%= project[:status] %>)
+    <% if is_draft %>
+      <i class='fa fa-pen-ruler'></i>
+    <% else %>
+      <i class='fa fa-folder'></i>
+    <% end %>
+  </h1>
   <% if is_admin %>
     <div style='text-align: right'>
       <a href=/projects/delete/<%=project[:_id]%> onclick='return confirm("are you sure?")'><button> admin delete project <i class='fa fa-trash'></i></button></a>
@@ -30,11 +37,11 @@
   <% end %>
 
   <% if is_draft %>
-    <a href='/genes/<%=project[:_id]%>/add_gene'><button> Add Gene</button> </a>
+    <a href='/genes/<%=project[:_id]%>/add_gene'><button> Add Gene <i class='fa fa-pen'></i></button> </a>
   <% end %>
   
   <% if genes.any? %>
-    <h3> Genes </h3>  
+    <h3> Genes <i class='fa fa-list'></i></h3>  
     <% genes.each do |gene| %>
       <div class='single-gene'>
         <%#= gene.to_json %>
@@ -66,7 +73,7 @@
         <% if variants.any? %>          
           <% variants.each_with_index do |variant, idx| %>
             <div class='single-variant'>
-              <b> Variant <%= idx+1 %> </b><br/><br/>
+              <b> Variant <%= idx+1 %> <i class='fa fa-flask'></i></b><br/><br/>
               <%= variant[:host] %>: <%= variant[:dna] %>
               <br/><br/>   
 
@@ -84,12 +91,12 @@
 
   <% if genes.any? && is_draft %>
     <form method=post action=/project/<%=project[:_id]%>/submit>
-      <button> submit project </button>
+      <button> submit project <i class='fa fa-paper-plane'></i></button>
     </form>
   <% end %>
 
   <% if is_admin && genes.any? %>
   <br/><br/>
-  <a href='/projects/<%=project[:_id]%>/add_variant'><button> Admin Add Variant</button> </a>
+  <a href='/projects/<%=project[:_id]%>/add_variant'><button> Admin Add Variant <i class='fa fa-add'></i></button> </a>
   <% end %>
 </div>
