@@ -33,8 +33,8 @@
 
   <label> ORF Nucleotide Sequence* </label>
   <br/>
-  <textarea name=upstream_sequence><%= guid if !$prod %></textarea>
-  <br/><br/>
+  <textarea id=upstream_sequence name=upstream_sequence oninput='regionSelectorSet(this.value)'><%= guid if !$prod %></textarea>
+  <br/><br/>  
 
   <label> Signal Peptide Present </label><input name=signal_peptide_present type=checkbox checked=true />
   <br/><br/>
@@ -72,18 +72,16 @@
   </select>
   <br/><br/>  
 
-  <div style='max-width: 800px'>
-    <label>Regions to preserve</label><br/>
-    
-    <div class='region_to_preserve'>
-      <label> Start nt <input name=region_preserve_start[] /></label> - <label> End nt <input name=region_preserve_end[] /></label>    
-      <button type=button onclick='this.closest(".region_to_preserve").remove()'> <i class='fa fa-trash'></i></button>
-      <br/>
 
-    </div>  
+  <div style='max-width: 800px'>
+    <%= erb :'genes/regions_to_preserve_section' %>    
+    
   </div>
   
-  <button type=button onclick="(e => { let last = document.querySelectorAll('.region_to_preserve'); let clone = last[last.length - 1].cloneNode(true); clone.querySelectorAll('input').forEach(i => i.value = ''); last[last.length - 1].after(clone); })()"> + </button>
+  <button hidden id=new_region_to_preserve_input type=button onclick="(e => { 
+    let last = document.querySelectorAll('.region_to_preserve'); 
+    let clone = last[last.length - 1].cloneNode(true); 
+    clone.querySelectorAll('input').forEach(i => i.value = ''); last[last.length - 1].after(clone); })()"> + </button>
 
   <br/><br/>
   <button autofocus> Submit </button>

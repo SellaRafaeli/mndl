@@ -1,0 +1,96 @@
+<h3> regions to preserve </h3>
+<h5> highlight a region and click the button </h5>
+<style>
+    #output {
+        margin-top: 20px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        background-color: #f9f9f9;
+        white-space: pre-wrap;
+    }
+    .region_marked {
+      background-color: yellow;
+    }
+</style>
+
+<p id="region_selector_text"></p>
+<button type=button id="markButton">Preserve Highlighted Region</button>
+<!-- <div id="output">Marked sections will appear here...</div> -->
+
+<script>
+  const textElement   = document.getElementById("region_selector_text");
+  const outputElement = document.getElementById("output");
+  const markButton    = document.getElementById("markButton");
+
+  var numMarkedRegions = 0;
+
+  //textElement.addEventListener('keyup', ()=>markButton.click())
+
+  markButton.addEventListener("click", () => {
+      const selection = window.getSelection();
+      const selectedText = selection.toString().trim();
+      
+      var startIndex = textElement.textContent.indexOf(selectedText);
+      var endIndex   = startIndex + selectedText.length;
+
+      console.log(`<${selectedText}>`,startIndex,endIndex)
+      if (!selectedText) { alert('no text selected, aborting')};
+      if (startIndex < 0) { alert("Please select only within the DNA"); return; }
+      if (selectedText) {
+          const range = selection.getRangeAt(0);
+          const span  = document.createElement("span");
+          span.textContent = selectedText;
+          span.id          = "marked_region_"+numMarkedRegions;
+          span.classList.add('region_marked')
+          
+          // Replace the selected text with the marked span
+          range.deleteContents();
+          range.insertNode(span);
+          
+          // Append the marked text to the output area
+          //const markedText = document.createElement("div");
+          //markedText.textContent = selectedText;
+          //outputElement.appendChild(markedText);
+
+          //fill in the inputs  
+          var inputs = document.querySelector('.region_to_preserve:last-child').querySelectorAll('input');
+          inputs[0].value = startIndex;
+          inputs[1].value = endIndex;
+
+          document.querySelector('.region_to_preserve:last-child').querySelector('button').setAttribute('data-region_marked',numMarkedRegions);
+          
+          new_region_to_preserve_input.click();
+          
+          numMarkedRegions++;
+          
+          selection.removeAllRanges();
+      } else { alert("Please select text to mark!"); }
+  });
+
+function regionSelectorSet(val) {
+  $('.region_to_preserve button:gt(0)').click(); //delete marked regions
+  $("#region_selector_text").text(val);
+}
+</script>
+
+<% if !$prod %>
+  <script>upstream_sequence.innerHTML = 'ABCDEFG'; upstream_sequence.oninput()</script>
+  <% end %>
+
+<style>
+.region_to_preserve:last-child {
+  display: none;
+}
+</style>
+<div class='region_to_preserve'>
+  <label> Start nt <input name=region_preserve_start[] readonly /></label> - <label> End nt <input name=region_preserve_end[] readonly /></label>    
+  <button type=button onclick='
+    var region = document.getElementById("marked_region_"+this.getAttribute("data-region_marked"));
+    if (region) region.classList.remove("region_marked");
+    this.closest(".region_to_preserve").remove();'>
+
+    <i class='fa fa-trash'></i>
+  </button>
+  <br/>
+</div>  
+

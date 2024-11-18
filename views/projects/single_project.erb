@@ -32,7 +32,7 @@
   </h1>
   <% if is_admin %>
     <div style='text-align: right'>
-      <a href=/projects/delete/<%=project[:_id]%> onclick='return confirm("are you sure?")'><button> admin delete project <i class='fa fa-trash'></i></button></a>
+      <a href=/projects/delete/<%=project[:_id]%> onclick='return confirm("are you sure?")'><button>admin del <i class='fa fa-trash admin_color'></i></button></a>
     </div>
   <% end %>
 
@@ -57,7 +57,7 @@
         enzymes to avoid: <%= gene[:enzymes_to_avoid] %>
         <br/><br/>
 
-        regions to preserve: <%= gene[:region_preserve_start].size %>
+        regions to preserve: <%= gene[:regions_to_preserve] %>
         <br/><br/>
 
         vector-based optimization: <%= gene[:vector_based_optimization] %>
@@ -66,7 +66,7 @@
         
 
         <div style='text-align: right'>
-          <a href=/genes/delete/<%=gene[:_id]%> onclick='return confirm("are you sure?")'><button> delete gene <i class='fa fa-trash'></i></button></a>
+          <a href=/genes/delete/<%=gene[:_id]%> onclick='return confirm("are you sure?")'><button> <i class='fa fa-trash'></i></button></a>
         </div>
         
         <% variants = $variants.get_many(gene_id: gene[:_id]) %>
@@ -74,12 +74,14 @@
           <% variants.each_with_index do |variant, idx| %>
             <div class='single-variant'>
               <b> Variant <%= idx+1 %> <i class='fa fa-flask'></i></b><br/><br/>
-              <%= variant[:host] %>: <%= variant[:dna] %>
+              host: <%= variant[:host] %>
               <br/><br/>   
-
+              variant: <%= variant[:dna] %>
+              <br/><br/>
               <% if is_admin %>
+
               <div style='text-align: right'>
-                <a href=/variants/delete/<%=variant[:_id]%> onclick='return confirm("are you sure?")'><button> admin delete variant <i class='fa fa-trash'></i></button></a>
+                <a href=/variants/delete/<%=variant[:_id]%> onclick='return confirm("are you sure?")'><button> admin del <i class='fa fa-trash admin_color'></i></button></a>
               </div>
               <% end %>              
             </div>
