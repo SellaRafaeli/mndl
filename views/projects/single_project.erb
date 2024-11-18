@@ -19,17 +19,24 @@
   padding:5px 10px;
   margin-bottom: 10px;
 }
+.status-submitted {
+  color: lightgreen;
+}
+.status-draft {
+  color: #8B8000;
+}
 </style>
 
 <div class='single-project-page'>
   <h1> Project <%= project[:name] %> 
-    (status: <%= project[:status] %>)
+    <span class='status-<%=project[:status]%>'>(status: <%= project[:status] %>)</span>
     <% if is_draft %>
       <i class='fa fa-pen-ruler'></i>
     <% else %>
       <i class='fa fa-folder'></i>
     <% end %>
   </h1>
+  <p> <%= project[:desc] %></p>
   <% if is_admin %>
     <div style='text-align: right'>
       <a href=/projects/delete/<%=project[:_id]%> onclick='return confirm("are you sure?")'><button>admin del <i class='fa fa-trash admin_color'></i></button></a>
