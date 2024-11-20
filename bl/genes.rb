@@ -11,8 +11,8 @@ post '/gene' do
 
   data = pr 
 
-  data[:region_preserve_start] = data[:region_preserve_start].select {|v| v.present? }
-  data[:region_preserve_end]   = data[:region_preserve_end].select {|v| v.present? }
+  data[:region_preserve_start] = data[:region_preserve_start].to_a.select {|v| v.present? }
+  data[:region_preserve_end]   = data[:region_preserve_end].to_a.select {|v| v.present? }
 
   data[:regions_to_preserve] =  data[:region_preserve_start].to_a.zip(data[:region_preserve_end].to_a).map { |a, b| "#{a}-#{b}" } 
 
