@@ -52,25 +52,13 @@
     <% genes.each do |gene| %>
       <div class='single-gene'>
         <%#= gene.to_json %>
-        Gene: <%= gene[:name] %>
+        <% 
+          keys = [:name, :host, :upstream_sequence, :nucleotide_sequence, :num_proteins, :enzymes_to_avoid, :regions_to_preserve, :vector_based_optimization]
+          keys.each do |key| %>
+        <b><%=key%></b><br/>        
+        <%= gene[key] %>
         <br/><br/>   
-
-        host: <%= gene[:host] %>
-        <br/><br/>
-
-        variants: <%= gene[:num_proteins] %>
-        <br/><br/>
-
-        enzymes to avoid: <%= gene[:enzymes_to_avoid] %>
-        <br/><br/>
-
-        regions to preserve: <%= gene[:regions_to_preserve] %>
-        <br/><br/>
-
-        vector-based optimization: <%= gene[:vector_based_optimization] %>
-        <br/><br/>
-
-        
+        <% end %>
 
         <div style='text-align: right'>
           <a href=/genes/delete/<%=gene[:_id]%> onclick='return confirm("are you sure?")'><button> <i class='fa fa-trash'></i></button></a>
