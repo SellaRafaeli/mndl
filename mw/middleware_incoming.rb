@@ -53,7 +53,9 @@ def _req
 end
 
 def is_admin 
-  cu && cu[:email] == 'sella.rafaeli@gmail.com'
+  return true if cu && cu[:email] == 'sella.rafaeli@gmail.com'
+  
+  cu && cu[:email].to_s.ends_with?('mndl.bio')
 end
 
 get '/mw/middleware_incoming' do 'refresh this' end
