@@ -37,3 +37,6 @@ get '/' do
   end
 end
 
+get '/dna_viewer' do 
+  erb :'/genes/dna_viewer', default_layout
+end

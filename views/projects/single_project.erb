@@ -72,7 +72,10 @@
           keys = [:name, :host, :upstream_sequence, :nucleotide_sequence, :num_proteins, :enzymes_to_avoid, :regions_to_preserve, :vector_based_optimization]
           keys.each do |key| %>
         <b><%=key%></b><br/>        
-        <%= gene.hwia[key] %>
+
+        <% val = gene[key] %>
+        <%= val  %>        
+        <%= erb :'/genes/dna_viewer', locals: {seq: val} if key == :upstream_sequence  %>
         <br/><br/>   
         <% end %>
 
@@ -88,6 +91,9 @@
               <!-- host: <%= gene[:host] %>
               <br/><br/>    -->
               <%= variant[:dna] %>
+              <hr/>
+              <%= erb :'/genes/dna_viewer', locals: {seq: variant[:dna]} %>
+              
               <br/><br/>
               <% if is_admin %>
 
