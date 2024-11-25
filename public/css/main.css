@@ -25,3 +25,7 @@ button {
 .admin_color {
   color: goldenrod;
 }
+
+.hidden {
+  display: none;
+}

@@ -12,15 +12,15 @@ Next steps Nov 21
 Guy's Feedback
 1. Default for signal peptide and linker = no 
 2. Host selection from a drop down menu - Guy will send list of hosts
-3. Include vector based optimization - default off
 4. Guy to send Sella list of restriction enzymes to avoid
-
 5. Prevent multiple genes with the same name
 6. In add variant view - Host should be user selected gene host (pulled from input)
 7. Output: Genes arranged as tabs in each project. Each tab has a list of variants.
+
 8. For each variant add: Add translation to amino acids, position, scroll bar, optimized for, expression modifiers
 9. Download options: Each variant with its sequence and metrics, or all project genes and variants with metrics all as .csv files
 
+3. Include vector based optimization - when checked, allow uploading text file
 10. Email notification for admin and for user.
 11. Admin view.
 12. UI

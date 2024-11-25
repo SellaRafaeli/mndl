@@ -1,7 +1,9 @@
 <%
-  project  = $projects.get(user_id: cuid, _id: pr[:_id])
-  genes    = $genes.get_many(project_id: project[:_id]).reverse
-  is_draft = project[:status] == PROJ_STATUS_DRAFT
+  proj_id     = pr[:_id]
+  project     = $projects.get(user_id: cuid, _id: proj_id)
+  genes       = $genes.get_many(project_id: proj_id).reverse
+  is_draft    = project[:status] == PROJ_STATUS_DRAFT
+  cur_gene_id = pr[:gene_id] || genes.first[:_id] rescue nil
 %>
 
 <style>
@@ -24,6 +26,14 @@
 }
 .status-draft {
   color: #8B8000;
+}
+.single-gene-menu {
+  padding:5px 10px;
+  border:1px solid black;
+}
+.selected-gene {
+  background-color: black;
+  color: white;
 }
 </style>
 
@@ -49,8 +59,14 @@
   
   <% if genes.any? %>
     <h3> Genes <i class='fa fa-list'></i></h3>  
-    <% genes.each do |gene| %>
-      <div class='single-gene'>
+    <div class='genes-menu'>
+      <% genes.each_with_index do |gene, idx| %>
+        <a href='/projects/<%=proj_id%>?gene_id=<%=gene[:_id]%>' class='single-gene-menu <%="selected-gene" if gene[:_id] == cur_gene_id%>'><%= gene[:name] %></a>
+      <% end %>
+    </div>
+    <br/>
+    <% genes.each_with_index do |gene, idx| %>
+      <div class='single-gene <%="hidden" unless gene[:_id] == cur_gene_id%>'>
         <%#= gene.to_json %>
         <% 
           keys = [:name, :host, :upstream_sequence, :nucleotide_sequence, :num_proteins, :enzymes_to_avoid, :regions_to_preserve, :vector_based_optimization]
@@ -69,9 +85,9 @@
           <% variants.each_with_index do |variant, idx| %>
             <div class='single-variant'>
               <b> Variant <%= idx+1 %> <i class='fa fa-flask'></i></b><br/><br/>
-              host: <%= gene[:host] %>
-              <br/><br/>   
-              variant: <%= variant[:dna] %>
+              <!-- host: <%= gene[:host] %>
+              <br/><br/>    -->
+              <%= variant[:dna] %>
               <br/><br/>
               <% if is_admin %>
 
@@ -94,6 +110,6 @@
 
   <% if is_admin && genes.any? %>
   <br/><br/>
-  <a href='/projects/<%=project[:_id]%>/add_variant'><button> Admin Add Variant <i class='fa fa-add'></i></button> </a>
+  <a href='/projects/<%=project[:_id]%>/add_variant?gene_id=<%=cur_gene_id%>'><button> Admin Add Variant To This Gene <i class='fa fa-add'></i></button> </a>
   <% end %>
 </div>
