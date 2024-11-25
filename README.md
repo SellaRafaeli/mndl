@@ -17,7 +17,6 @@ Guy's Feedback
 6. In add variant view - Host should be user selected gene host (pulled from input)
 7. Output: Genes arranged as tabs in each project. Each tab has a list of variants.
 8. For each variant add: Add translation to amino acids, position, scroll bar, optimized for, expression modifiers
-// Done until here
 
 9. Download options: Each variant with its sequence and metrics, or all project genes and variants with metrics all as .csv files
 
@@ -41,6 +40,7 @@ Guy's Feedback
 * For each variant add: Add translation to amino acids (in row below the DNA sequence, also for ORF nucleotide seq. as in mock)
 * For each variant add: add position (also for both DNA sequence inputs, as in mock)
 * For each variant add: Add scroll bar
+
 * Download options- project: All project genes and variants all in a single csv file. 
 Columns: project_name, gene_name, variant_number, host_name, sequence (combined utr+ORF)
 
