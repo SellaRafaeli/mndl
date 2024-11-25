@@ -4,6 +4,9 @@
   proj_genes = $genes.get_many(project_id: proj_id).mapo(:name)
   enzymes_to_avoid = ENZYMES
   # 20.times {|i| enzymes_to_avoid.push('enzyme'+i.to_s) }
+  seq        = $prod ? 'gttactaacgtaccccacctaaatggacatccagtgtaatgatacagtcccgtcgtttca
+tccgctatctgaacgggtgtggctcgtatgtgaatcgcttgttactaacgtaccccacctaaatggacatccagtgtaatgatacagtcccgtcgtttca
+tccgctatctgaacgggtgtggctcgtatgtgaatcgctt' : ''
 %>
 
 <style>
@@ -27,14 +30,25 @@
   <input name=name value="<%= 'gene-'+nice_id if !$prod %>" />
   <br/><br/>
 
+  <label> Host </label><Br/>
+  <select required name=host>
+    <option selected disabled value=''>Please choose</option>
+    <% SUPPORTED_HOSTS.each do |host| %>
+      <option><%=host%></option>
+    <% end %>
+  </select>
+  
+  <br/><br/>
+  
+
   <label> 5' Upstream Sequence* </label>
   <br/>
-  <textarea name=upstream_sequence><%= guid if !$prod %></textarea>
+  <textarea name=upstream_sequence><%= seq %></textarea>
   <br/><br/>
 
   <label> ORF Nucleotide Sequence* </label>
   <br/>
-  <textarea id=upstream_sequence name=nucleotide_sequence oninput='regionSelectorSet(this.value)'><%= guid if !$prod %></textarea>
+  <textarea id=upstream_sequence name=nucleotide_sequence oninput='regionSelectorSet(this.value)'><%= seq %></textarea>
   <br/><br/>  
 
   <label> Signal Peptide Present </label><input name=signal_peptide_present type=checkbox />
@@ -51,15 +65,6 @@
   </select>
   <br/><br/>
 
-  <label> Host </label>
-  <select required name=host>
-    <option selected disabled value=''>Please choose</option>
-    <% SUPPORTED_HOSTS.each do |host| %>
-      <option><%=host%></option>
-    <% end %>
-  </select>
-  
-  <br/><br/>
   
   <label> Number of variants per ORF sequence </label>
   <select name=num_proteins>
@@ -82,7 +87,7 @@
 
 
   <div style='max-width: 800px'>
-    <%#= erb :'genes/regions_to_preserve_section' %>    
+    <%= erb :'genes/regions_to_preserve_section' %>    
     
   </div>
   
