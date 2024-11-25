@@ -1,8 +1,9 @@
 <%
-  proj_id = pr[:proj_id]
-  proj    = $projects.get(user_id: cuid, _id: proj_id)
-  enzymes_to_avoid = []
-  20.times {|i| enzymes_to_avoid.push('enzyme'+i.to_s) }
+  proj_id    = pr[:proj_id]
+  proj       = $projects.get(user_id: cuid, _id: proj_id)
+  proj_genes = $genes.get_many(project_id: proj_id).mapo(:name)
+  enzymes_to_avoid = ENZYMES
+  # 20.times {|i| enzymes_to_avoid.push('enzyme'+i.to_s) }
 %>
 
 <style>
@@ -18,7 +19,7 @@
 <h4> <%= proj[:name] %> </h4>
 <h1> New Gene <i class='fa fa-dna'></i></h1>
 
-<form method=post action=/gene>
+<form method=post action=/gene onsubmit="return validateForm(event)">
   <input name=project_id value="<%=proj_id%>" hidden />
 
   <label> Name </label>
@@ -36,10 +37,10 @@
   <textarea id=upstream_sequence name=nucleotide_sequence oninput='regionSelectorSet(this.value)'><%= guid if !$prod %></textarea>
   <br/><br/>  
 
-  <label> Signal Peptide Present </label><input name=signal_peptide_present type=checkbox checked=true />
+  <label> Signal Peptide Present </label><input name=signal_peptide_present type=checkbox />
   <br/><br/>
 
-  <label> Linker Present </label><input name=linker_present type=checkbox checked=true />
+  <label> Linker Present </label><input name=linker_present type=checkbox />
   <br/><br/>
 
   <label> Number of Proteins </label>
@@ -50,7 +51,14 @@
   </select>
   <br/><br/>
 
-  <label> Host </label><input name=host value="<%='host-'+nice_id if !$prod %>" />
+  <label> Host </label>
+  <select required name=host>
+    <option selected disabled value=''>Please choose</option>
+    <% SUPPORTED_HOSTS.each do |host| %>
+      <option><%=host%></option>
+    <% end %>
+  </select>
+  
   <br/><br/>
   
   <label> Number of variants per ORF sequence </label>
@@ -61,7 +69,7 @@
   </select>
   <br/><br/>
 
-  <label> Include Vector-Based Optimization </label><input name=vector_based_optimization type=checkbox checked=true />
+  <label> Include Vector-Based Optimization </label><input name=vector_based_optimization type=checkbox />
   <br/><br/>
 
   <label> Enzymes to avoid (multiselect with "ctrl"/"cmd")</label><br/>
@@ -86,3 +94,15 @@
   <br/><br/>
   <button autofocus> Submit Gene </button>
 </form>
+
+<script>
+function validateNewGeneForm(event) {
+  const field = document.querySelector('input[name="name"]');
+  
+  if (<%= proj_genes %>.includes(field.value)) {
+    alert("Gene already exists in this project with name "+field.value);
+    return false; // Prevent form submission
+  }
+  return true; // Allow form submission
+}
+</script>

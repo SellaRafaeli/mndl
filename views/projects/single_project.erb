@@ -1,6 +1,6 @@
 <%
   project  = $projects.get(user_id: cuid, _id: pr[:_id])
-  genes    = $genes.get_many(project_id: project[:_id])  
+  genes    = $genes.get_many(project_id: project[:_id]).reverse
   is_draft = project[:status] == PROJ_STATUS_DRAFT
 %>
 
@@ -56,7 +56,7 @@
           keys = [:name, :host, :upstream_sequence, :nucleotide_sequence, :num_proteins, :enzymes_to_avoid, :regions_to_preserve, :vector_based_optimization]
           keys.each do |key| %>
         <b><%=key%></b><br/>        
-        <%= gene[key] %>
+        <%= gene.hwia[key] %>
         <br/><br/>   
         <% end %>
 
@@ -69,7 +69,7 @@
           <% variants.each_with_index do |variant, idx| %>
             <div class='single-variant'>
               <b> Variant <%= idx+1 %> <i class='fa fa-flask'></i></b><br/><br/>
-              host: <%= variant[:host] %>
+              host: <%= gene[:host] %>
               <br/><br/>   
               variant: <%= variant[:dna] %>
               <br/><br/>
